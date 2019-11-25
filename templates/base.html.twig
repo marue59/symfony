@@ -3,24 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="build/app.css">
+        <script src="build/app.js"></script>
+        {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
     </head>
-    <body>
-    <ul class="nav">
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Active</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-    </ul>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    <body class="bg-lightgrey">
+    {%  block header %} {{ include ("navbar.html.twig") }}{% endblock %}
+    {% block body %}{% endblock %}
+    {% block javascripts %} {{ encore_entry_script_tags('app') }}{% endblock %}
     </body>
 </html>
