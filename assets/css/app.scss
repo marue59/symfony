@@ -3,14 +3,18 @@
 
 // the ~ allows you to reference things in node_modules
 
-
-
 $theme-colors: (
   "navbar": #13d98b,
+  "button": #f75431,
+  "button_dropdown" : #fff,
 );
+
 @import "~bootstrap/scss/bootstrap";
-.navbar-nav {
+.navbar-nav{
   width: 100%;
   justify-content: space-around;
+}
+.navbar{
+ padding: 0 0;
 }
 
