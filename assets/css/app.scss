@@ -1,5 +1,5 @@
 // customize some Bootstrap variables
-//$primary: darken(#428bca, 20%);
+$primary: darken(#428bca, 20%);
 
 // the ~ allows you to reference things in node_modules
 
@@ -15,6 +15,6 @@ $theme-colors: (
   justify-content: space-around;
 }
 .navbar{
- padding: 0 0;
+  padding: 0 0;
 }
 

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+  <h1 class="text-center">{{ program.title }}</h1>
+  <div class="row">
+    <div class="col-12 text-center">
+      <img src="{{ program.poster }}" alt="">
+      <p >Résumé: {{ program.summary }}</p>
+      <ul class="text-center mt-4">
+        {% for season in seasons %}
+          <li><a class="" href="/show/episode/{{ season.id }}">season {{ season.number }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}
