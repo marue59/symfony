@@ -154,8 +154,8 @@ class WildController extends AbstractController
                 ->createNotFoundException('No slug has been sent to find a season.');
         }
         $season = $this->getDoctrine()
-            ->getRepository(Season::class)
-            ->findOneBy(['id' => $id]);
+                        ->getRepository(Season::class)
+                        ->findOneBy(['id' => $id]);
         if (!$season) {
             throw $this->createNotFoundException(
                 'No season with id = ' . $id . ', found.'
@@ -175,30 +175,24 @@ class WildController extends AbstractController
 
     /**
      *
-     * @param string|null $id
+     * @param Episode $episode
      * @return Response
-     * @Route("wild/episode/{id}", name="episode")
+     * @Route("/wild/episode/{id}", name="episode")
      */
-    public function showEpisode(?string $id):Response
+    public function showEpisode(Episode $episode):Response
     {
-        if (!$id) {
+        if (!$episode) {
             throw $this
                 ->createNotFoundException('No slug has been sent to find an episode.');
         }
 
-        $episode = $this->getDoctrine()
-            ->getManager()
-            ->getRepository(Episode::class)
-            ->findOneBy(['id' => $id]);
-
-        if (!$episode) {
-            throw $this->createNotFoundException(
-                'No episode with id = '.$id.', found.'
-            );
-        }
+        $season = $episode->getSeason();
+        $program = $season->getProgram();
 
         return $this->render('wild/episode.html.twig', [
             'episode' => $episode,
+            'season' => $season,
+            'program' => $program
         ]);
     }
 }
