@@ -40,7 +40,7 @@ class Season
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Episode", mappedBy="season", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Episode", mappedBy="season")
      */
     private $episodes;
 

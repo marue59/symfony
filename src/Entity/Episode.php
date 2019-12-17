@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EpisodeRepository")
  */
@@ -15,78 +13,71 @@ class Episode
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\season", inversedBy="episodes")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $season;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
-
     /**
      * @ORM\Column(type="integer")
      */
     private $number;
 
     /**
-     * @ORM\Column(type="text")
+     * @return mixed
      */
-    private $synopsis;
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * @param mixed $number
+     * @return Episode
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+        return $this;
+    }
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $summary;
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Season", inversedBy="episodes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $season;
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
-    public function getSeason(): ?season
-    {
-        return $this->season;
-    }
-
-    public function setSeason(?season $season): self
-    {
-        $this->season = $season;
-
-        return $this;
-    }
-
     public function getTitle(): ?string
     {
         return $this->title;
     }
-
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
         return $this;
     }
-
-    public function getNumber(): ?int
+    public function getSummary(): ?string
     {
-        return $this->number;
+        return $this->summary;
     }
-
-    public function setNumber(int $number): self
+    public function setSummary(string $summary): self
     {
-        $this->number = $number;
-
+        $this->summary = $summary;
         return $this;
     }
-
-    public function getSynopsis(): ?string
+    public function getSeason(): ?Season
     {
-        return $this->synopsis;
+        return $this->season;
     }
-
-    public function setSynopsis(string $synopsis): self
+    public function setSeason(?Season $season): self
     {
-        $this->synopsis = $synopsis;
-
+        $this->season = $season;
         return $this;
     }
 }
