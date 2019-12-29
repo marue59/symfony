@@ -7,14 +7,15 @@ use App\Entity\Episode;
 use App\Entity\Category;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Form\CategoryType;
+use App\Form\ProgramSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\HttpFoundation\Request;
 
 class WildController extends AbstractController
 {
-
     /**
      * Show all rows from Program’s entity
      *
@@ -33,10 +34,22 @@ class WildController extends AbstractController
             );
         }
 
+        $form = $this->createForm(
+            ProgramSearchType::class,
+            null,
+            ['method' => Request::METHOD_GET]
+        );
+        $category = new Category();
+        $formCategory = $this->createForm(CategoryType::class, $category);
+
         return $this->render(
             'wild/index.html.twig',
-            ['programs' => $programs]
+            ['programs' => $programs,
+                'form' => $form->createView(),
+                'form_category' => $formCategory->createView()
+            ]
         );
+
     }
     /**
      * Getting a program with a formatted slug for title
@@ -60,6 +73,7 @@ class WildController extends AbstractController
             ->getRepository(Program::class)
             ->findOneBy(['title' => mb_strtolower($slug)]);
 
+
         if (!$program) {
             throw $this->createNotFoundException(
                 'No program with ' . $slug . ' title, found in program\'s table.'
@@ -71,6 +85,7 @@ class WildController extends AbstractController
             'slug' => $slug,
         ]);
     }
+
 
     /**
      * @Route("/wild/category/{categoryName}", defaults={"categoryName" = null}, name="show_category").
@@ -86,7 +101,6 @@ class WildController extends AbstractController
         $category = $this->getDoctrine()
             ->getRepository(Category::class)
             ->findOneBy(['name' => $categoryName]);
-
 
         $categoryId = $category->getId();
 
@@ -163,8 +177,6 @@ class WildController extends AbstractController
         }
         $program = $season->getProgram();
         $episodes = $season->getEpisodes();
-
-
 
         return $this->render('wild/showAllSeason.html.twig', [
             'season' => $season,
